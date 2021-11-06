@@ -57,6 +57,12 @@ BOOL CMFCButtonDlg::OnInitDialog()
 
 	m_radio4.SetCheck(TRUE);
 
+	auto icon = LoadIcon(NULL, IDI_HAND);
+	m_radio4.SetIcon(icon);
+
+	icon = LoadIcon(NULL, IDI_INFORMATION);
+	m_radio5.SetIcon(icon);
+
 	return TRUE;  // フォーカスをコントロールに設定した場合を除き、TRUE を返します。
 }
 

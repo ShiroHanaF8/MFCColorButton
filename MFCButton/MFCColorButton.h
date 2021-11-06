@@ -14,6 +14,8 @@ public:
 
 private:
     bool m_initialized = false;
-
+public:
+    virtual void OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState);
+    virtual BOOL OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 };
 
