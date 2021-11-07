@@ -29,11 +29,20 @@ BOOL MFCColorButton::OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESUL
 		}
 
 		if (IsChecked()) {
-			SetFaceColor(RGB(255, 0, 0));
+			SetFaceColor(GetSysColor(COLOR_BTNHIGHLIGHT));
 		}
 		else {
-			SetFaceColor(RGB(0, 255, 0));
+			SetFaceColor(GetSysColor(COLOR_3DDKSHADOW));
 		}
+
+	}
+	else if (message == WM_CTLCOLOR) {
+		TRACE(_T("WM_CTLCOLOR %8X %8X\n"), wParam, lParam);
+	}
+	else if (message == WM_CTLCOLORBTN) {
+		TRACE(_T("WM_CTLCOLORBTN %8X %8X\n"), wParam, lParam);
+	}
+	else {
 		//TRACE(_T("%8X %8X %8X\n"), message, wParam, lParam);
 	}
 

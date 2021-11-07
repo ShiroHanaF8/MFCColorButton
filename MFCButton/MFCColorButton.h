@@ -7,8 +7,6 @@ public:
     MFCColorButton();
     virtual ~MFCColorButton();
 
-    bool OninitDialog();
-
 public:
     DECLARE_MESSAGE_MAP()
 

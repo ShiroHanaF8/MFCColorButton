@@ -5,7 +5,7 @@
 #pragma once
 
 #include "MFCColorButton.h"
-
+#include "ColorButton.h"
 
 // CMFCButtonDlg ダイアログ
 class CMFCButtonDlg : public CDialogEx
@@ -36,8 +36,8 @@ public:
 	CButton m_button1;
 	CMFCButton m_colorButton;
 	CMFCButton m_buttonMFC;
-	CMFCButton m_radio2;
-	CMFCButton m_radio3;
+	ColorButton m_radio2;
+	ColorButton m_radio3;
 	MFCColorButton m_radio4;
 	MFCColorButton m_radio5;
 	MFCColorButton m_check;
