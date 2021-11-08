@@ -11,6 +11,7 @@ MFCColorButton::MFCColorButton()
 	m_blueBrush(RGB(0,0,255))
 {
 	m_bDontUseWinXPTheme = TRUE;
+	m_nFlatStyle = BUTTONSTYLE_SEMIFLAT;
 }
 
 MFCColorButton::~MFCColorButton()
