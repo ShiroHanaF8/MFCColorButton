@@ -14,9 +14,9 @@ MFCColorButton::MFCColorButton()
 	m_nFlatStyle = BUTTONSTYLE_SEMIFLAT;
 
 	// テキストカラー
-	SetTextHotColor(RGB(255, 0, 255)); // 紫
+	SetTextHotColor(RGB(0, 255, 255)); // シアン
 	SetTextColor(RGB(255, 255, 0)); // 黄
-	m_clrFace = RGB(0, 255, 255); // シアン
+
 }
 
 MFCColorButton::~MFCColorButton()
@@ -32,11 +32,13 @@ BOOL MFCColorButton::OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESUL
 void MFCColorButton::OnFillBackground(CDC* pDC, const CRect& rectClient)
 {
 	if (IsChecked()) {
-		pDC->FillRect(rectClient, &m_redBrush);
+		m_clrFace = RGB(255, 0, 0); // 赤
 	}
 	else {
-		pDC->FillRect(rectClient, &m_blueBrush);
+		m_clrFace = RGB(0, 0, 255); // 青
 	}
+	return CMFCButton::OnFillBackground(pDC, rectClient);
+
 }
 
 //void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
