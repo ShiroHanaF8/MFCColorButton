@@ -6,8 +6,10 @@ END_MESSAGE_MAP()
 
 
 MFCColorButton::MFCColorButton()
+	:m_redBrush(RGB(255,0,0)),
+	m_greenBrush(RGB(0,255,0)),
+	m_blueBrush(RGB(0,0,255))
 {
-	m_bTransparent = FALSE;
 	m_bDontUseWinXPTheme = TRUE;
 }
 
@@ -24,25 +26,20 @@ void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
 
 BOOL MFCColorButton::OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 {
-	if (message == WM_PAINT)
-	{
-		if (IsChecked()) {
-			SetFaceColor(GetSysColor(COLOR_BTNHIGHLIGHT));
-		}
-		else {
-			SetFaceColor(GetSysColor(COLOR_3DDKSHADOW));
-		}
+	return CMFCButton::OnWndMsg(message, wParam, lParam, pResult);
+}
 
-	}
-	else if (message == WM_CTLCOLOR) {
-		TRACE(_T("WM_CTLCOLOR %8X %8X\n"), wParam, lParam);
-	}
-	else if (message == WM_CTLCOLORBTN) {
-		TRACE(_T("WM_CTLCOLORBTN %8X %8X\n"), wParam, lParam);
+void MFCColorButton::OnFillBackground(CDC* pDC, const CRect& rectClient)
+{
+	if (IsChecked()) {
+		pDC->FillRect(rectClient, &m_redBrush);
 	}
 	else {
-		//TRACE(_T("%8X %8X %8X\n"), message, wParam, lParam);
+		pDC->FillRect(rectClient, &m_blueBrush);
 	}
 
-	return CMFCButton::OnWndMsg(message, wParam, lParam, pResult);
+}
+
+void MFCColorButton::OnDrawFocusRect(CDC* pDC, const CRect& rectClient)
+{
 }
