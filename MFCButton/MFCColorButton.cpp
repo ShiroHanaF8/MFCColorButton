@@ -7,6 +7,8 @@ END_MESSAGE_MAP()
 
 MFCColorButton::MFCColorButton()
 {
+	m_bTransparent = FALSE;
+	m_bDontUseWinXPTheme = TRUE;
 }
 
 MFCColorButton::~MFCColorButton()
@@ -24,10 +26,6 @@ BOOL MFCColorButton::OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESUL
 {
 	if (message == WM_PAINT)
 	{
-		if (IsWindowsThemingEnabled()) {
-			EnableWindowsTheming(FALSE);
-		}
-
 		if (IsChecked()) {
 			SetFaceColor(GetSysColor(COLOR_BTNHIGHLIGHT));
 		}
