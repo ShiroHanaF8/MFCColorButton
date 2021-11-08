@@ -12,16 +12,15 @@ MFCColorButton::MFCColorButton()
 {
 	m_bDontUseWinXPTheme = TRUE;
 	m_nFlatStyle = BUTTONSTYLE_SEMIFLAT;
+
+	// テキストカラー
+	SetTextHotColor(RGB(255, 0, 255)); // 紫
+	SetTextColor(RGB(255, 255, 0)); // 黄
+	m_clrFace = RGB(0, 255, 255); // シアン
 }
 
 MFCColorButton::~MFCColorButton()
 {
-}
-
-
-void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
-{
-	return CMFCButton::OnDrawBorder(pDC, rectClient, uiState);
 }
 
 
@@ -38,9 +37,19 @@ void MFCColorButton::OnFillBackground(CDC* pDC, const CRect& rectClient)
 	else {
 		pDC->FillRect(rectClient, &m_blueBrush);
 	}
-
 }
 
-void MFCColorButton::OnDrawFocusRect(CDC* pDC, const CRect& rectClient)
-{
-}
+//void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
+//{
+//	return CMFCButton::OnDrawBorder(pDC, rectClient, uiState);
+//}
+
+//void MFCColorButton::OnDraw(CDC* pDC, const CRect& rect, UINT uiState)
+//{
+//
+//	return CMFCButton::OnDraw(pDC, rect, uiState);
+//}
+
+//void MFCColorButton::OnDrawFocusRect(CDC* pDC, const CRect& rectClient)
+//{
+//}

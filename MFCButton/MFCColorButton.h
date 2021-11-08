@@ -16,12 +16,14 @@ private:
     CBrush m_greenBrush;
     CBrush m_blueBrush;
 public:
-    virtual void OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState);
     virtual BOOL OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
 protected:
-
     virtual void OnFillBackground(CDC* pDC, const CRect& rectClient);
-    virtual void OnDrawFocusRect(CDC* pDC, const CRect& rectClient);
+
+    //virtual void OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState);
+    //virtual void OnDraw(CDC* pDC, const CRect& rect, UINT uiState);
+    //virtual void OnDrawFocusRect(CDC* pDC, const CRect& rectClient);
+    //void DrawBorder(CDC* pDC, CRect& rectClient, UINT uiState);
 };
 
