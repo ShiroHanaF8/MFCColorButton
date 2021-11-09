@@ -183,7 +183,6 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ColorButton.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MFCButton.h" />
     <ClInclude Include="MFCButtonDlg.h" />
@@ -193,7 +192,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ColorButton.cpp" />
     <ClCompile Include="MFCButton.cpp" />
     <ClCompile Include="MFCButtonDlg.cpp" />
     <ClCompile Include="MFCColorButton.cpp" />
