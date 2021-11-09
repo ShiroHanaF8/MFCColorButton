@@ -13,6 +13,7 @@ public:
 private:
     CBrush m_checkedBrush;
     CBrush m_uncheckedBrush;
+    CBrush m_hilightedBrush;
     bool m_isRoundButton = false;
     int m_roundSize = 8; // Windows11‚Ì•W€
 public:

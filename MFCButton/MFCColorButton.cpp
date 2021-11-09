@@ -7,7 +7,8 @@ END_MESSAGE_MAP()
 
 MFCColorButton::MFCColorButton()
 	:m_checkedBrush(RGB(100,100,255)),
-	m_uncheckedBrush(RGB(255,200,200))
+	m_uncheckedBrush(RGB(255,200,200)),
+	m_hilightedBrush(RGB(200,200,255))
 {
 	//m_bDontUseWinXPTheme = TRUE;
 	//m_nFlatStyle = BUTTONSTYLE_SEMIFLAT;
@@ -21,6 +22,7 @@ MFCColorButton::~MFCColorButton()
 {
 	m_checkedBrush.DeleteObject();
 	m_uncheckedBrush.DeleteObject();
+	m_hilightedBrush.DeleteObject();
 }
 
 
@@ -45,10 +47,21 @@ void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
 {
 	CMFCButton::OnDrawBorder(pDC, rectClient, uiState);
 
-	auto old = SelectObject(pDC->m_hDC, IsChecked() ?  m_checkedBrush : m_uncheckedBrush);
+	CBrush *newBrush = nullptr;
 
+	if (m_bHighlighted) {
+		newBrush = &m_hilightedBrush;
+	}
+	else {
+		newBrush = IsChecked() ? &m_checkedBrush : &m_uncheckedBrush;
+	}
+
+	if (newBrush == nullptr) {
+		return;
+	}
+
+	auto old = SelectObject(pDC->m_hDC, *newBrush);
 	const int roundNum = m_isRoundButton ? m_roundSize : 0;
-
 	POINT round = { roundNum, roundNum };
 	pDC->RoundRect(rectClient, round);
 	SelectObject(pDC->m_hDC, old);
