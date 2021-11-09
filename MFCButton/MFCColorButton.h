@@ -16,6 +16,8 @@ private:
     CBrush m_hilightedBrush;
     bool m_isRoundButton = false;
     int m_roundSize = 8; // Windows11ÇÃïWèÄ
+
+    void SetButtonStyleFromBuildVersion();
 public:
     virtual BOOL OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 

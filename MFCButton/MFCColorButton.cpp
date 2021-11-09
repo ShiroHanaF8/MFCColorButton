@@ -16,6 +16,40 @@ MFCColorButton::MFCColorButton()
 	// テキストカラー
 	//tTextHotColor(RGB(0, 255, 255)); // シアン
 	//tTextColor(RGB(255, 255, 0)); // 黄
+
+	SetButtonStyleFromBuildVersion();
+}
+
+void MFCColorButton::SetButtonStyleFromBuildVersion()
+{
+	HMODULE hMod;
+	hMod = LoadLibrary(_T("ntdll.dll"));
+	if (hMod) {
+		OSVERSIONINFOEXW osw = {};
+		void(WINAPI * func)(OSVERSIONINFOEXW*) = (void(WINAPI*)(OSVERSIONINFOEXW*))GetProcAddress(hMod, "RtlGetVersion");
+		if (func == nullptr) {
+			FreeLibrary(hMod);
+		}
+		osw.dwOSVersionInfoSize = sizeof(osw);
+		func(&osw);
+		FreeLibrary(hMod);
+
+		const DWORD buildVer = osw.dwBuildNumber;
+		if (buildVer >= 22000) { // Windows 11
+			m_isRoundButton = true;
+			m_roundSize = 8;
+		}
+		else if (buildVer > 10000) { // Windows 10
+			m_isRoundButton = false;
+		}
+		else if (buildVer > 9000) { // Windows 8
+			m_isRoundButton = false;
+		}
+		else if (buildVer > 6000) { // Windows XP
+			m_isRoundButton = true;
+			m_roundSize = 10;
+		}
+	}
 }
 
 MFCColorButton::~MFCColorButton()
