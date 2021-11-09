@@ -6,21 +6,21 @@ END_MESSAGE_MAP()
 
 
 MFCColorButton::MFCColorButton()
-	:m_redBrush(RGB(255,0,0)),
-	m_greenBrush(RGB(0,255,0)),
-	m_blueBrush(RGB(0,0,255))
+	:m_checkedBrush(RGB(100,100,255)),
+	m_uncheckedBrush(RGB(255,200,200))
 {
-	m_bDontUseWinXPTheme = TRUE;
-	m_nFlatStyle = BUTTONSTYLE_SEMIFLAT;
+	//m_bDontUseWinXPTheme = TRUE;
+	//m_nFlatStyle = BUTTONSTYLE_SEMIFLAT;
 
 	// テキストカラー
-	SetTextHotColor(RGB(0, 255, 255)); // シアン
-	SetTextColor(RGB(255, 255, 0)); // 黄
-
+	//tTextHotColor(RGB(0, 255, 255)); // シアン
+	//tTextColor(RGB(255, 255, 0)); // 黄
 }
 
 MFCColorButton::~MFCColorButton()
 {
+	m_checkedBrush.DeleteObject();
+	m_uncheckedBrush.DeleteObject();
 }
 
 
@@ -29,22 +29,31 @@ BOOL MFCColorButton::OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESUL
 	return CMFCButton::OnWndMsg(message, wParam, lParam, pResult);
 }
 
-void MFCColorButton::OnFillBackground(CDC* pDC, const CRect& rectClient)
+//void MFCColorButton::OnFillBackground(CDC* pDC, const CRect& rectClient)
+//{
+//	if (IsChecked()) {
+//		m_clrFace = RGB(255, 0, 0); // 赤
+//	}
+//	else {
+//		m_clrFace = RGB(0, 0, 255); // 青
+//	}
+//	return CMFCButton::OnFillBackground(pDC, rectClient);
+//
+//}
+
+void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
 {
-	if (IsChecked()) {
-		m_clrFace = RGB(255, 0, 0); // 赤
-	}
-	else {
-		m_clrFace = RGB(0, 0, 255); // 青
-	}
-	return CMFCButton::OnFillBackground(pDC, rectClient);
+	CMFCButton::OnDrawBorder(pDC, rectClient, uiState);
+
+	auto old = SelectObject(pDC->m_hDC, IsChecked() ?  m_checkedBrush : m_uncheckedBrush);
+
+	const int roundNum = m_isRoundButton ? m_roundSize : 0;
+
+	POINT round = { roundNum, roundNum };
+	pDC->RoundRect(rectClient, round);
+	SelectObject(pDC->m_hDC, old);
 
 }
-
-//void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
-//{
-//	return CMFCButton::OnDrawBorder(pDC, rectClient, uiState);
-//}
 
 //void MFCColorButton::OnDraw(CDC* pDC, const CRect& rect, UINT uiState)
 //{
@@ -52,6 +61,7 @@ void MFCColorButton::OnFillBackground(CDC* pDC, const CRect& rectClient)
 //	return CMFCButton::OnDraw(pDC, rect, uiState);
 //}
 
-//void MFCColorButton::OnDrawFocusRect(CDC* pDC, const CRect& rectClient)
-//{
-//}
+void MFCColorButton::OnDrawFocusRect(CDC* pDC, const CRect& rectClient)
+{
+	// フォーカス枠は邪魔なので削除
+}

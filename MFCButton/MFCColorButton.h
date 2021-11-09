@@ -11,19 +11,18 @@ public:
     DECLARE_MESSAGE_MAP()
 
 private:
-    bool m_initialized = false;
-    CBrush m_redBrush;
-    CBrush m_greenBrush;
-    CBrush m_blueBrush;
+    CBrush m_checkedBrush;
+    CBrush m_uncheckedBrush;
+    bool m_isRoundButton = false;
+    int m_roundSize = 8; // Windows11ÇÃïWèÄ
 public:
     virtual BOOL OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
 protected:
-    virtual void OnFillBackground(CDC* pDC, const CRect& rectClient);
+    //virtual void OnFillBackground(CDC* pDC, const CRect& rectClient);
 
-    //virtual void OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState);
+    virtual void OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState);
     //virtual void OnDraw(CDC* pDC, const CRect& rect, UINT uiState);
-    //virtual void OnDrawFocusRect(CDC* pDC, const CRect& rectClient);
-    //void DrawBorder(CDC* pDC, CRect& rectClient, UINT uiState);
+    virtual void OnDrawFocusRect(CDC* pDC, const CRect& rectClient);
 };
 
