@@ -6,16 +6,19 @@ END_MESSAGE_MAP()
 
 
 MFCColorButton::MFCColorButton()
-	:m_checkedBrush(RGB(100,100,255)),
-	m_uncheckedBrush(RGB(255,200,200)),
-	m_hilightedBrush(RGB(200,200,255))
+	:m_uncheckedBrush(GetGlobalData()->clrBtnFace)
 {
-	//m_bDontUseWinXPTheme = TRUE;
-	//m_nFlatStyle = BUTTONSTYLE_SEMIFLAT;
+	m_bDontUseWinXPTheme = FALSE;
+	m_nFlatStyle = BUTTONSTYLE_3D;
 
-	// テキストカラー
-	//tTextHotColor(RGB(0, 255, 255)); // シアン
-	//tTextColor(RGB(255, 255, 0)); // 黄
+	m_hilightedBrush.FromHandle(GetGlobalData()->brHilite);
+
+	if (GetGlobalData()->m_bIsBlackHighContrast || GetGlobalData()->m_bIsWhiteHighContrast) {
+		m_checkedBrush.CreateSolidBrush(GetGlobalData()->clrBtnShadow);
+	}
+	else {
+		m_checkedBrush.CreateSolidBrush(RGB(210, 240, 255));
+	}
 
 	SetButtonStyleFromBuildVersion();
 }
@@ -48,6 +51,9 @@ void MFCColorButton::SetButtonStyleFromBuildVersion()
 		else if (buildVer > 6000) { // Windows XP
 			m_isRoundButton = true;
 			m_roundSize = 10;
+		}
+		else {
+			m_isRoundButton = false;
 		}
 	}
 }
@@ -83,7 +89,7 @@ void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
 
 	CBrush *newBrush = nullptr;
 
-	if (m_bHighlighted) {
+	if (m_bHighlighted && !IsChecked()) {
 		newBrush = &m_hilightedBrush;
 	}
 	else {
