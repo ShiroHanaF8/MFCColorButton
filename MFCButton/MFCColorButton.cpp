@@ -33,6 +33,7 @@ void MFCColorButton::SetButtonStyleFromBuildVersion()
 		void(WINAPI * func)(OSVERSIONINFOEXW*) = (void(WINAPI*)(OSVERSIONINFOEXW*))GetProcAddress(hMod, "RtlGetVersion");
 		if (func == nullptr) {
 			FreeLibrary(hMod);
+			return;
 		}
 		osw.dwOSVersionInfoSize = sizeof(osw);
 		func(&osw);
