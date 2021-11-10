@@ -102,7 +102,7 @@ void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
 
 	auto oldBrush = SelectObject(pDC->m_hDC, *newBrush);
 	auto oldPen = SelectObject(pDC->m_hDC, m_borderPen);
-	const int roundNum = m_isRoundButton ? m_roundSize : 0;
+	const int roundNum = (m_isRoundButton && !GetGlobalData()->IsHighContrastMode()) ? m_roundSize : 0;
 	POINT round = { roundNum, roundNum };
 	pDC->RoundRect(rectClient, round);
 	SelectObject(pDC->m_hDC, oldBrush);
