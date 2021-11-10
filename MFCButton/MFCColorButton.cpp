@@ -6,14 +6,14 @@ END_MESSAGE_MAP()
 
 
 MFCColorButton::MFCColorButton()
-	:m_uncheckedBrush(GetGlobalData()->clrBtnFace)
+	:m_uncheckedBrush(GetGlobalData()->clrBtnLight)
 {
 	m_bDontUseWinXPTheme = FALSE;
 	m_nFlatStyle = BUTTONSTYLE_3D;
 
-	m_hilightedBrush.FromHandle(GetGlobalData()->brHilite);
 
-	if (GetGlobalData()->m_bIsBlackHighContrast || GetGlobalData()->m_bIsWhiteHighContrast) {
+
+	if (GetGlobalData()->IsHighContrastMode()) {
 		m_checkedBrush.CreateSolidBrush(GetGlobalData()->clrBtnShadow);
 	}
 	else {
@@ -40,7 +40,7 @@ void MFCColorButton::SetButtonStyleFromBuildVersion()
 		const DWORD buildVer = osw.dwBuildNumber;
 		if (buildVer >= 22000) { // Windows 11
 			m_isRoundButton = true;
-			m_roundSize = 8;
+			m_roundSize = 5;
 		}
 		else if (buildVer > 10000) { // Windows 10
 			m_isRoundButton = false;
@@ -62,7 +62,6 @@ MFCColorButton::~MFCColorButton()
 {
 	m_checkedBrush.DeleteObject();
 	m_uncheckedBrush.DeleteObject();
-	m_hilightedBrush.DeleteObject();
 }
 
 
@@ -90,7 +89,7 @@ void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
 	CBrush *newBrush = nullptr;
 
 	if (m_bHighlighted && !IsChecked()) {
-		newBrush = &m_hilightedBrush;
+		return;
 	}
 	else {
 		newBrush = IsChecked() ? &m_checkedBrush : &m_uncheckedBrush;
