@@ -6,7 +6,8 @@ END_MESSAGE_MAP()
 
 
 MFCColorButton::MFCColorButton()
-	:m_uncheckedBrush(GetGlobalData()->clrBtnLight)
+	:m_uncheckedBrush(GetGlobalData()->clrBtnLight),
+	m_borderPen(PS_SOLID, 1, GetGlobalData()->clrActiveBorder)
 {
 	m_bDontUseWinXPTheme = FALSE;
 	m_nFlatStyle = BUTTONSTYLE_3D;
@@ -99,11 +100,13 @@ void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
 		return;
 	}
 
-	auto old = SelectObject(pDC->m_hDC, *newBrush);
+	auto oldBrush = SelectObject(pDC->m_hDC, *newBrush);
+	auto oldPen = SelectObject(pDC->m_hDC, m_borderPen);
 	const int roundNum = m_isRoundButton ? m_roundSize : 0;
 	POINT round = { roundNum, roundNum };
 	pDC->RoundRect(rectClient, round);
-	SelectObject(pDC->m_hDC, old);
+	SelectObject(pDC->m_hDC, oldBrush);
+	SelectObject(pDC->m_hDC, oldPen);
 
 }
 

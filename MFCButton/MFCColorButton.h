@@ -13,6 +13,7 @@ public:
 private:
     CBrush m_checkedBrush;
     CBrush m_uncheckedBrush;
+    CPen m_borderPen;
     bool m_isRoundButton = false;
     int m_roundSize = 5; // Windows11‚Ì•W€
 
