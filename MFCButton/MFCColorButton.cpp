@@ -115,5 +115,5 @@ void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
 
 void MFCColorButton::OnDrawFocusRect(CDC* pDC, const CRect& rectClient)
 {
-	// フォーカス枠は邪魔なので削除
+	return CMFCButton::OnDrawFocusRect(pDC, rectClient);
 }
