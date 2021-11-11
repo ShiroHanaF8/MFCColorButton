@@ -1,13 +1,10 @@
 #include "pch.h"
 #include "MFCColorButton.h"
-BEGIN_MESSAGE_MAP(MFCColorButton, CMFCButton)
-	ON_WM_PAINT()
-END_MESSAGE_MAP()
 
 
 MFCColorButton::MFCColorButton()
 	:m_uncheckedBrush(GetGlobalData()->clrBtnLight),
-	m_borderPen(PS_SOLID, 1, GetGlobalData()->clrActiveBorder)
+	m_borderPen(PS_SOLID, 0, GetGlobalData()->clrActiveBorder)
 {
 	m_bDontUseWinXPTheme = FALSE;
 	m_nFlatStyle = BUTTONSTYLE_3D;
@@ -94,7 +91,7 @@ void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
 		return;
 	}
 	else {
-		newBrush = IsChecked() ? &m_checkedBrush : &m_uncheckedBrush;
+		newBrush = IsChecked() ? &m_checkedBrush : nullptr;
 	}
 
 	if (newBrush == nullptr) {

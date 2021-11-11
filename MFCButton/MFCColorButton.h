@@ -7,9 +7,6 @@ public:
     MFCColorButton();
     virtual ~MFCColorButton();
 
-public:
-    DECLARE_MESSAGE_MAP()
-
 private:
     CBrush m_checkedBrush;
     CBrush m_uncheckedBrush;
