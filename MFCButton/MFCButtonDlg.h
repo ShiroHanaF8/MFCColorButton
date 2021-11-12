@@ -32,11 +32,11 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
-	CMFCButton m_button1;
+	CButton m_button1;
 	CMFCButton m_colorButton;
 	MFCColorButton m_buttonMFC;
-	MFCColorButton m_radio2;
-	MFCColorButton m_radio3;
+	CMFCButton m_radio2;
+	CMFCButton m_radio3;
 	MFCColorButton m_radio4;
 	MFCColorButton m_radio5;
 	MFCColorButton m_check;
