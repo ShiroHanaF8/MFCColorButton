@@ -40,4 +40,6 @@ public:
 	MFCColorButton m_radio4;
 	MFCColorButton m_radio5;
 	MFCColorButton m_check;
+	afx_msg void OnBnClickedRadio2();
+	afx_msg void OnBnClickedRadio3();
 };

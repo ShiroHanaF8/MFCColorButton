@@ -39,6 +39,8 @@ void CMFCButtonDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CMFCButtonDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_RADIO2, &CMFCButtonDlg::OnBnClickedRadio2)
+	ON_BN_CLICKED(IDC_RADIO3, &CMFCButtonDlg::OnBnClickedRadio3)
 END_MESSAGE_MAP()
 
 
@@ -102,3 +104,17 @@ HCURSOR CMFCButtonDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CMFCButtonDlg::OnBnClickedRadio2()
+{
+	m_radio4.EnableWindow(TRUE);
+	m_radio5.EnableWindow(TRUE);
+}
+
+
+void CMFCButtonDlg::OnBnClickedRadio3()
+{
+	m_radio4.EnableWindow(FALSE);
+	m_radio5.EnableWindow(FALSE);
+}
