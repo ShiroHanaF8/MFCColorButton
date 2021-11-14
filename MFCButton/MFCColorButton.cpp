@@ -56,7 +56,7 @@ void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
 {
 	CMFCButton::OnDrawBorder(pDC, rectClient, uiState);
 
-	if (IsChecked()) {
+	if (IsChecked() && this->IsWindowEnabled()) {
 		COLORREF color = {};
 		if (IsHighContrastMode()) {
 			color = GetGlobalData()->clrBtnShadow;
