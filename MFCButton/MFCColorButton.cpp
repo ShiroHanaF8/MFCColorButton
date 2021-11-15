@@ -2,7 +2,10 @@
 #include "MFCColorButton.h"
 
 
-MFCColorButton::MFCColorButton()
+MFCColorButton::MFCColorButton():
+	m_checkedColor(RGB(210, 240, 255)),
+	m_roundSize(5), // Windows11の標準
+	m_isRoundButton(false)
 {
 	m_bDontUseWinXPTheme = FALSE;
 	m_nFlatStyle = BUTTONSTYLE_3D;
@@ -17,12 +20,10 @@ void MFCColorButton::SetButtonStyleFromBuildVersion()
 		OSVERSIONINFOEXW osw = {};
 		void(WINAPI * func)(OSVERSIONINFOEXW*) = (void(WINAPI*)(OSVERSIONINFOEXW*))GetProcAddress(hMod, "RtlGetVersion");
 		if (func == nullptr) {
-			FreeLibrary(hMod);
 			return;
 		}
 		osw.dwOSVersionInfoSize = sizeof(osw);
 		func(&osw);
-		FreeLibrary(hMod);
 
 		const DWORD buildVer = osw.dwBuildNumber;
 		if (buildVer >= 22000) { // Windows 11
@@ -45,6 +46,7 @@ void MFCColorButton::SetButtonStyleFromBuildVersion()
 	}
 	else {
 		m_isRoundButton = false;
+		TRACE(_T("ntdll.dllがロードされなかった\n"));
 	}
 }
 
@@ -54,9 +56,9 @@ MFCColorButton::~MFCColorButton()
 
 void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
 {
-	CMFCButton::OnDrawBorder(pDC, rectClient, uiState);
+	CMFCButton::OnDrawBorder(pDC, rectClient, uiState); // アイコンがずれるため常に描画
 
-	if (IsChecked() && this->IsWindowEnabled()) {
+	if (IsChecked() && IsWindowEnabled()) {
 		COLORREF color = {};
 		if (IsHighContrastMode()) {
 			color = GetGlobalData()->clrBtnShadow;
@@ -64,13 +66,20 @@ void MFCColorButton::OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState)
 		else {
 			color = m_checkedColor;
 		}
+
 		CBrush brush(color);
-		auto oldBrush = SelectObject(pDC->m_hDC, brush);
 		CPen pen(PS_SOLID, 0, GetGlobalData()->clrActiveBorder);
+		auto oldBrush = SelectObject(pDC->m_hDC, brush);
 		auto oldPen = SelectObject(pDC->m_hDC, pen);
-		const int roundNum = (m_isRoundButton && !IsHighContrastMode()) ? m_roundSize : 0;
-		POINT round = { roundNum, roundNum };
-		pDC->RoundRect(rectClient, round);
+
+		if (m_isRoundButton && !IsHighContrastMode()) {
+			POINT round = { m_roundSize, m_roundSize };
+			pDC->RoundRect(rectClient, round);
+		}
+		else {
+			pDC->Rectangle(rectClient);
+		}
+
 		SelectObject(pDC->m_hDC, oldBrush);
 		SelectObject(pDC->m_hDC, oldPen);
 	}
@@ -81,5 +90,5 @@ BOOL MFCColorButton::IsHighContrastMode()
 	HIGHCONTRAST hc = {};
 	hc.cbSize = sizeof(HIGHCONTRAST);
 	SystemParametersInfo(SPI_GETHIGHCONTRAST, sizeof(HIGHCONTRAST), &hc, 0);
-	return hc.dwFlags & HCF_HIGHCONTRASTON;
+	return (hc.dwFlags & HCF_HIGHCONTRASTON);
 }

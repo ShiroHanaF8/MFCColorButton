@@ -8,15 +8,13 @@ public:
     virtual ~MFCColorButton();
 
 private:
-    bool m_isRoundButton = false;
-    int m_roundSize = 5; // Windows11ÇÃïWèÄ
+    bool m_isRoundButton;
+    int m_roundSize;
+    const COLORREF m_checkedColor;
 
     void SetButtonStyleFromBuildVersion();
 
-    const COLORREF m_checkedColor = RGB(210, 240, 255);
-
 protected:
-
     virtual void OnDrawBorder(CDC* pDC, CRect& rectClient, UINT uiState);
     BOOL IsHighContrastMode();
 };
